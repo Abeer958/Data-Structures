@@ -1,27 +1,22 @@
 class TreeNode {
     constructor(data) {
         this.data = data;
-        this.children = []
+        this.children = [];
     }
 
     addChild(child) {
-        if (child instanceof TreeNode) {
-            this.children.push(child)
-        } else {
-            this.children.push(new TreeNode(child))
-        }
+        return child instanceof TreeNode ? this.children.push(child) : this.children.push(new TreeNode(child));
     }
 
     removeChild(childToRemove) {
-        let length = this.children.length;
+        const length = this.children.length;
 
-        this.children.filter(child => {
-           this.children = this.children.filter(child => {
-            return childToRemove instanceof TreeNode ? child !== childToRemove : child.data !== childToRemove
-           })
+        this.children = this.children.filter(child => {
+            return childToRemove instanceof TreeNode ? child !== childToRemove :
+                child.data !== childToRemove;
         })
 
-        if ( length === this.children.length) {
+        if (length === this.children.length) {
             this.children.forEach(child => {
                 child.removeChild(childToRemove)
             })
@@ -31,7 +26,7 @@ class TreeNode {
     print(level = 0) {
         let result = '';
         for (let i = 0; i < level; i++) {
-            result += '--'
+            result += '--';
         }
         console.log(`${result}${this.data}`)
         this.children.forEach(child => {
@@ -42,17 +37,15 @@ class TreeNode {
     depthFirstTraversal() {
         console.log(this.data)
         this.children.forEach(child => {
-            child.depthFirstTraversal();
+            child.depthFirstTraversal()
         })
-
     }
-    
+
     breadthFirstTraversal() {
         let queue = [this];
-       
         while (queue.length > 0) {
             const current = queue.shift();
-            console.log(current.data)
+            console.log(current.data);
             queue = queue.concat(current.children)
         }
     }
